@@ -11,10 +11,10 @@ class PatientComponent extends Component{
     }
 
     componentDidMount(){
-        PatientService.getHello().then((res) => {
+        PatientService.getPatients().then((res) => {
             this.setState({ patients: res.data});
             console.log("--------");
-            console.log(this.state.data);
+            console.log(this.state.patients.patient);
             console.log("--------");
         });
     }

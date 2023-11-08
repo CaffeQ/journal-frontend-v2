@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL = 'http://localhost:8080/hello';
 
 class PatientService{
-    getHello(){
+    getPatients(){
         return axios.get('http://localhost:8080/patient');
     }
 }
