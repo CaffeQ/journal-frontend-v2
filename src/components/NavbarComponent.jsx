@@ -15,7 +15,8 @@ function NavbarComponent() {
           <Nav className="me-auto">
             <Link className="nav-link" to="/home">Home</Link>
             <Link className="nav-link" to="/journal">Journal</Link>
-            <Link className="nav-link" to="/mail">Mail</Link>
+            <Link className="nav-link" to="/chats">Chats</Link>
+            <Link className="nav-link" to="/meetings">Meetings</Link>
             <Link className="nav-link" to="/login">Login</Link>
             <Link className="nav-link" to="/signUp">Sign up</Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">

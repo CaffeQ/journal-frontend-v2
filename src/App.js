@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react';
 import PatientComponent from './components/PatientComponent';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavbarComponent from './components/NavbarComponent';
-import LoginComponent from './components/LoginComponent';
-import SignUpComponent from './components/SignUpComponent';
+import LoginComponent from './components/login/LoginComponent';
+import SignUpComponent from './components/login/SignUpComponent';
+import { Container } from './components/Container';
+import { ChatComponent } from './components/chat/ChatComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -13,11 +15,15 @@ function App() {
     <div>
       <Router>
         <NavbarComponent/>
+        <Container>
         <Routes>
-            <Route path="/journal" element={<PatientComponent />} />
-            <Route path="/login" element={<LoginComponent />} />
-            <Route path="/signUp" element={<SignUpComponent />} />
+              <Route path="/journal" element={<PatientComponent />} />
+              <Route path="/login" element={<LoginComponent />} />
+              <Route path="/signUp" element={<SignUpComponent />} />
+              <Route path="/chats" element={<ChatComponent />} />
         </Routes>
+        </Container>
+
       </Router>
      
 

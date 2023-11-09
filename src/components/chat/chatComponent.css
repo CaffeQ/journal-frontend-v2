@@ -1,0 +1,32 @@
+.box{
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; 
+}
+
+.message{
+    padding-left: 25px;
+}
+
+.users-box{
+    height: 450px;
+    width: 300px;
+    background-color: #E3E3E3;
+    border-radius:5px;
+}
+
+.message-box{
+    height: 450px;
+    width: 300px;
+    padding:20px;
+    background-color: #F8F4F4;
+    border-radius:5px;
+}
+
+.search-bar{
+    height: 35px;
+    width:260px;
+    margin: 15px auto;
+    background-color: rgb(108, 108, 108);
+    border-radius:10px;
+}

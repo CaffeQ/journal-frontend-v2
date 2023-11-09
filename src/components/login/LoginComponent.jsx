@@ -1,16 +1,16 @@
 import './loginComponent.css';
-import AccountService from '../services/AccountService.js';
+import AccountService from '../../services/AccountService.js';
 import {useState} from "react";
 import { useParams } from 'react-router-dom';
-import Account from '../Entities/Account.js';
+import Account from '../../Entities/Account.js';
 
-export default function SignUpComponent(){
+export default function LoginComponent(){
     const [email,setEmail] = useState(null);
     const [password,setPassword] = useState(null);
     const [loginStatus,setLoginStatus] = useState(null);
     function handleSubmit(){
         const account = new Account("string", email, password, "string");
-        AccountService.postAccount(account)
+        AccountService.loginAccount(account)
         .then((res) => {
             setLoginStatus('success');
         })
@@ -24,7 +24,7 @@ export default function SignUpComponent(){
     
     return(
     <div className="center">
-        <strong className="title"> Sign up! </strong>
+        <strong> Log in! </strong>
         <form>
         <p>Email</p>
             <input onChange={e=> setEmail(e.target.value)} type="text" />
@@ -40,8 +40,8 @@ export default function SignUpComponent(){
         </div>
             <div className="login-wrapper"></div>
         </form>
-        {loginStatus == 'success' && <p>Successfull sign up!</p>}
-        {loginStatus == 'error' && <p>Sign up failed.</p>}
+        {loginStatus == 'success' && <p>Successfull login!</p>}
+        {loginStatus == 'error' && <p>login failed.</p>}
     </div>
     )
 }
