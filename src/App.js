@@ -5,6 +5,7 @@ import PatientComponent from './components/PatientComponent';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavbarComponent from './components/NavbarComponent';
 import LoginComponent from './components/LoginComponent';
+import SignUpComponent from './components/SignUpComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -15,6 +16,7 @@ function App() {
         <Routes>
             <Route path="/journal" element={<PatientComponent />} />
             <Route path="/login" element={<LoginComponent />} />
+            <Route path="/signUp" element={<SignUpComponent />} />
         </Routes>
       </Router>
      
