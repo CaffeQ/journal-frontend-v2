@@ -21,26 +21,27 @@ class PatientComponent extends Component{
     render(){
         return (
             <div>
-                <h2 className="text-center">Patient Details</h2>
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Patient Id</th>
-                            <th>Patient Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.state.patients.map(patient =>
-                                    <tr key={patient.id}>
-                                        <td>{patient.id}</td>
-                                        <td>{patient.name}</td>
-                                    </tr>
-                            )
-                        }
-                    </tbody>
-                </table>
+                    <h2 className="text-center">Patient Details</h2>
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient Id</th>
+                                <th>Patient Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                this.state.patients.map(patient =>
+                                        <tr key={patient.id}>
+                                            <td>{patient.id}</td>
+                                            <td>{patient.name}</td>
+                                        </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
             </div>
+            
         )
     }
 }

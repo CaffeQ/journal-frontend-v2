@@ -2,19 +2,22 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom';
+import "./navbarComponent.css";
 
 function NavbarComponent() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">Health Center</Navbar.Brand>
+        <Navbar.Brand href="/home">Health Center</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#journal">Journal</Nav.Link>
-            <Nav.Link href="#meetings">Meetings</Nav.Link>
-            <Nav.Link href="#mail">Mail</Nav.Link>
+            <Link className="nav-link" to="/home">Home</Link>
+            <Link className="nav-link" to="/journal">Journal</Link>
+            <Link className="nav-link" to="/mail">Mail</Link>
+            <Link className="nav-link" to="/login">Login</Link>
+            <Link className="nav-link" to="/signUp">Sign up</Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
