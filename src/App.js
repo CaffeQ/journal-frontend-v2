@@ -8,6 +8,7 @@ import LoginComponent from './components/login/LoginComponent';
 import SignUpComponent from './components/login/SignUpComponent';
 import { Container } from './components/Container';
 import { ChatComponent } from './components/chat/ChatComponent';
+import DetailsComponent from './components/DetailsComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -21,6 +22,7 @@ function App() {
               <Route path="/login" element={<LoginComponent />} />
               <Route path="/signUp" element={<SignUpComponent />} />
               <Route path="/chats" element={<ChatComponent />} />
+              <Route path="/details" element={<DetailsComponent />} />
         </Routes>
         </Container>
 
