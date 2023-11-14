@@ -8,26 +8,18 @@ export default function DetailsComponent(patientDiagnosises) {
         PatientService.getPatientDiagnosises()
             .then((res) => {
                 const data = res.data;
-                setPatient(data);
                 console.log("Data:", data);
-                console.log("Server Response:", res);
-                console.log("--------");
-                console.log("Conditions", patient);
-                console.log("--------");
-                if (patient) {
-                    const { diagnoses } = patient;
-                    console.log(diagnoses);
-                }
+                setPatient(data);
             })
             .catch((err) => {
                 console.error("Error fetching patient diagnoses:", err);
             });
     }, []);
 
-    if (patient !== null) {
-        return (
-            <div>
-                <h2 className="text-center">Patient conditions</h2>
+    return (
+        <div>
+            <h2 className="text-center">Patient conditions</h2>
+            {patient !== null ? (
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -37,16 +29,20 @@ export default function DetailsComponent(patientDiagnosises) {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* Render patient conditions here */}
+                        {patient.diagnoses.map((diagnosis) => (
+                            <tr key={diagnosis.id}>
+                                <td>{diagnosis.condition}</td>
+                                <td>{diagnosis.date}</td>
+                                <td>{diagnosis.doctorName}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
-            </div>
-        );
-    } else {
-        return (
-            <div className="box">
-                Permission denied
-            </div>
-        );
-    }
+            ) : (
+                <div className="box">
+                    Permission denied
+                </div>
+            )}
+        </div>
+    );
 }
