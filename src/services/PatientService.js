@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = 'http://localhost:8080/patient';
+const BASE_URL = 'http://localhost:8080/patients';
 
 class PatientService{
     getPatients(){
-        return axios.get(BASE_URL);
+        return axios.get(BASE_URL, { withCredentials: true });
     }
 }
 

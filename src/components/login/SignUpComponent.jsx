@@ -7,10 +7,12 @@ import Account from '../../Entities/Account.js';
 export default function SignUpComponent(){
     const [email,setEmail] = useState(null);
     const [password,setPassword] = useState(null);
+    const [name,setName] = useState(null);
+    const [role,setRole] = useState(null);
     const [loginStatus,setLoginStatus] = useState(null);
     function handleSubmit(){
-        const account = new Account("string", email, password, "string");
-        AccountService.postAccount(account)
+        const account = new Account("string", email, password, name);
+        AccountService.postAccount(account,role)
         .then((res) => {
             setLoginStatus('success');
         })
@@ -35,6 +37,39 @@ export default function SignUpComponent(){
             <input onChange={e=> setPassword(e.target.value)} type="password" />
         <label className="text">
         </label>
+        <p>Name</p>
+            <input onChange={e=> setName(e.target.value)} type="test" />
+        <label className="text">
+        </label>
+        <div>
+            <label>
+                <input
+                    type="radio"
+                    value="patient"
+                    onChange={(e) => setRole(e.target.value)}
+                    checked={role === "patient"} // Assuming you have a state variable 'role'
+                />
+                Patient
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="doctor"
+                    onChange={(e) => setRole(e.target.value)}
+                    checked={role === "doctor"} // Assuming you have a state variable 'role'
+                />
+                Doctor
+            </label>
+            <label>
+                <input
+                    type="radio"
+                    value="other"
+                    onChange={(e) => setRole(e.target.value)}
+                    checked={role === "other"} // Assuming you have a state variable 'role'
+                />
+                Other
+            </label>
+        </div>
         <div className="text">
             <button onClick={handleSubmit} type="button">Submit</button>
         </div>

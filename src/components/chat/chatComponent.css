@@ -30,3 +30,9 @@
     background-color: rgb(108, 108, 108);
     border-radius:10px;
 }
+
+.center{
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+}

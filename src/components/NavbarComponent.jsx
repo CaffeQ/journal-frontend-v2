@@ -18,7 +18,6 @@ function NavbarComponent() {
             <Link className="nav-link" to="/chats">Chats</Link>
             <Link className="nav-link" to="/meetings">Meetings</Link>
             <Link className="nav-link" to="/login">Login</Link>
-            <Link className="nav-link" to="/signUp">Sign up</Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

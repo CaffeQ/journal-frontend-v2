@@ -11,6 +11,10 @@ export default function PatientComponent() {
             console.log("--------");
             console.log(patients.patient);
             console.log("--------");
+        })
+        .catch(err=>{
+            console.log(err);
+            console.log("Persmission denied");
         });
     }, []); // Empty dependency array to mimic componentDidMount
 
