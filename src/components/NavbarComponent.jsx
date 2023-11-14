@@ -20,9 +20,8 @@ function NavbarComponent() {
             <Link className="nav-link" to="/login">Login</Link>
             <NavDropdown title="My Pages" id="basic-nav-dropdown">
               <Link className="nav-link" to="/details">Details</Link>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
+              <Link className="nav-link" to="/conditions">Conditions</Link>
+              <Link className="nav-link" to="/meetings">Meetings</Link>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
