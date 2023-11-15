@@ -10,6 +10,7 @@ import { Container } from './components/Container';
 import { ChatComponent } from './components/chat/ChatComponent';
 import DetailsComponent from './components/DetailsComponent';
 import ConditionComponent from './components/ConditionComponent';
+import MyConditionComponent from './components/MyConditionComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -24,7 +25,8 @@ function App() {
               <Route path="/signUp" element={<SignUpComponent />} />
               <Route path="/chats" element={<ChatComponent />} />
               <Route path="/details" element={<DetailsComponent />} />
-              <Route path="/conditions" element={<ConditionComponent />} />
+              <Route path="/patient/conditions" element={<ConditionComponent />} />
+              <Route path="/myConditions" element={<MyConditionComponent />} />
         </Routes>
         </Container>
 
