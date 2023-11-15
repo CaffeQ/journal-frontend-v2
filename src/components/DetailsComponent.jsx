@@ -5,7 +5,7 @@ import PatientService from '../services/PatientService';
 export default function DetailsComponent(){
     const [patient, setPatient] = useState(null);
     useEffect(() => {
-        PatientService.getPatientDetails().then((res) => {
+        PatientService.getMyPatientDetails().then((res) => {
             setPatient(res.data);
             console.log("--------");
             console.log(res.data);

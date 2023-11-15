@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import PatientService from "../services/PatientService";
+import { useParams } from "react-router-dom";
 
-export default function DetailsComponent(patientID) {
+export default function DetailsComponent() {
     const [patient, setPatient] = useState(null);
-
+    const { id } = useParams(); 
+    console.log("Patient ID="+id);
     useEffect(() => {
-        PatientService.getPatientDiagnosises()
+        PatientService.getPatientDetails(id)
             .then((res) => {
                 const data = res.data;
                 console.log("Data:", data);

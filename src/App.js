@@ -11,6 +11,7 @@ import { ChatComponent } from './components/chat/ChatComponent';
 import DetailsComponent from './components/DetailsComponent';
 import ConditionComponent from './components/ConditionComponent';
 import MyConditionComponent from './components/MyConditionComponent';
+import MeetingsComponent from './components/MeetingsComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -25,7 +26,8 @@ function App() {
               <Route path="/signUp" element={<SignUpComponent />} />
               <Route path="/chats" element={<ChatComponent />} />
               <Route path="/details" element={<DetailsComponent />} />
-              <Route path="/patient/conditions" element={<ConditionComponent />} />
+              <Route path="/patient/:id/conditions" element={<ConditionComponent />} />
+              <Route path="/patient/:id/meetings" element={<MeetingsComponent/>} />
               <Route path="/myConditions" element={<MyConditionComponent />} />
         </Routes>
         </Container>

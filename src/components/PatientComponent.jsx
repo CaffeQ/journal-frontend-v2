@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PatientService from '../services/PatientService'; // Make sure to import your service
 import "./chat/chatComponent.css";
+import { Link } from 'react-router-dom';
 
 export default function PatientComponent() {
     const [patients, setPatients] = useState([]);
@@ -10,7 +11,7 @@ export default function PatientComponent() {
         PatientService.getPatients().then((res) => {
             setPatients(res.data);
             console.log("--------");
-            console.log(patients.patient);
+            console.log(res.data);
             console.log("--------");
             isErr = false;
         })
@@ -27,15 +28,21 @@ export default function PatientComponent() {
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th>Patient Id</th>
                             <th>Patient Name</th>
+                            <th>Patient Email</th>
                         </tr>
                     </thead>
                     <tbody>
                         {patients.map((patient) => (
                             <tr key={patient.id}>
-                                <td>{patient.id}</td>
-                                <td>{patient.name}</td>
+                                <td>{patient.account.name}</td>
+                                <td>{patient.account.email}</td>
+                                <td>
+                                <Link className="nav-link" to={`/patient/${patient.id}/meetings`}>Meetings</Link>
+                                </td>
+                                <td>
+                                <Link className="nav-link" to={`/patient/${patient.id}/conditions`}>Conditions</Link>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
