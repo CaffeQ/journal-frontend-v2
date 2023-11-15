@@ -4,31 +4,31 @@ import AccountService from "../../services/AccountService";
 
 export function ChatComponent() {
     const [email, setEmail] = useState(null);
-    const [chat, setChat] = useState(null);
-    const [selectedUser, setSelectedUser] = useState(null); // New state to keep track of the selected user
+    const [chat, setChat] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
     const [accountNames, setAccountNames] = useState([]);
-
-    function handleGetChats() {}
+    const [error, setError] = useState(null);
 
     function submitHandler(e) {
         e.preventDefault();
         handleGetUser(email);
     }
 
-    function handleGetUser() {
-        ChatService.getUser()
+    function handleGetUser(toEmail) {
+        ChatService.getUserConversation(toEmail)
             .then((res) => {
                 const chatArray = res.data;
 
-            if (chatArray.length > 0) {
-                setChat(chatArray);
-                console.log(chatArray);
-            } else {
-                console.error("No users found");
-            }
+                if (chatArray.length > 0) {
+                    setChat(chatArray);
+                    setError(null); // Clear any previous errors
+                } else {
+                    setError("No messages found");
+                }
             })
             .catch((error) => {
-                console.error("Error fetching user:", error);
+                setError("Error fetching messages");
+                console.error("Error fetching messages:", error);
             });
     }
 
@@ -36,8 +36,10 @@ export function ChatComponent() {
         ChatService.getAllUsers()
             .then((res) => {
                 setAccountNames(res.data);
+                console.log(accountNames);
             })
             .catch((error) => {
+                setError("Error fetching account names");
                 console.error("Error fetching account names:", error);
             });
     }
@@ -45,15 +47,14 @@ export function ChatComponent() {
     useEffect(() => {
         fetchAccountNames();
     }, []);
-    useEffect(() => {
-        handleGetUser();
-    }, [accountNames]);
-    
 
     // New function to handle user selection
     const handleUserSelection = (selectedAccount) => {
-        handleGetUser(selectedAccount.email);
+        const toEmail = selectedAccount.email;
+        console.log("toEmail="+toEmail);
+        handleGetUser(toEmail);
         setSelectedUser(selectedAccount);
+        setChat([]);
     };
 
     return (
@@ -74,14 +75,17 @@ export function ChatComponent() {
                         ))}
                     </div>
                 )}
-            
             </div>
             <div className="message-box">
-            {chat.map((message) => (
-                    <div key={message.id} className="message-row">
-                        <strong>{message.fromAccount.name}:</strong> {message.message}
-                    </div>
-                ))}
+                {error ? (
+                    <div className="error-message">{error}</div>
+                ) : (
+                    chat.map((message) => (
+                        <div key={message.id} className="message-row">
+                            <strong>{message.fromAccount.name}:</strong> {message.message}
+                        </div>
+                    ))
+                )}
                 <form className="text-box" onSubmit={submitHandler}>
                     <input onChange={(e) => setEmail(e.target.value)} type="text" />
                     <label className="text"></label>

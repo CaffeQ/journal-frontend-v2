@@ -27,6 +27,18 @@ class ChatService{
         });
       }
 
+      getUserConversation(toEmail){
+        return new Promise((resolve, reject) => {
+          axios.get(BASE_URL+"/account/chatTo?toEmail="+toEmail,{ withCredentials: true } )
+            .then(response => {
+               resolve(response);
+            })
+            .catch(error => {
+               reject(error);
+            });
+        });
+      }
+
       
 }
 
