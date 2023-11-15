@@ -12,6 +12,12 @@ class PatientService{
     getPatientDetails(id){
         return axios.get("http://localhost:8080/patient?id="+id,{ withCredentials: true });
     }
+    postObservation(observation){
+        return axios.post(BASE_URL+"/observation",observation ,{ withCredentials: true } )
+    }
+    postEncounter(encounter){
+        return axios.post(BASE_URL+"/encounter",encounter,{ withCredentials: true } );
+    }
 }
 
 export default new PatientService()
