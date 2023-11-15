@@ -3,7 +3,7 @@ import Account from '../Entities/Account'
 const BASE_URL = 'http://localhost:8080';
 
 class ChatService{
-    getUserChats() {
+    getAllUsers() {
         return new Promise((resolve, reject) => {
           axios.get(BASE_URL+"/account",{ withCredentials: true })
             .then(response => {
@@ -15,9 +15,9 @@ class ChatService{
         });
       }
 
-      getUser(email){
+      getUser(){
         return new Promise((resolve, reject) => {
-          axios.get("http://localhost:8080/accountid?email=" + email,{ withCredentials: true } )
+          axios.get(BASE_URL+"/account/chat",{ withCredentials: true } )
             .then(response => {
                resolve(response);
             })
@@ -26,6 +26,8 @@ class ChatService{
             });
         });
       }
+
+      
 }
 
 export default new ChatService();

@@ -6,19 +6,7 @@ class AccountService {
       return new Promise((resolve, reject) => {
         axios.post(BASE_URL+"/account/login", account,{ withCredentials: true })
           .then(response => {
-            console.log("Server response:", response);
-            console.log("session=" + response.data.sessionId);
-            document.cookie = "session=" + response.data.sessionId;
-/*
-            const cookie = (response.headers['set-cookie'])
-                  .find(cookie => cookie.includes("session"))
-                  ?.match(new RegExp(`^session=(.+?);`))
-                  ?.[1];
-                  */
-                  const setCookieHeader = response.headers['set-cookie'];
-                  if (setCookieHeader) {
-                    console.log("Set-Cookie Header:", setCookieHeader);
-                  }
+
 
             resolve(response);
           })
