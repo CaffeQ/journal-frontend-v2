@@ -37,6 +37,7 @@ export default function MeetingsComponent() {
     function handleCreateMeeting(){
         const dateObject = new Date(newMeetingDate);
         const isoFormattedDate = dateObject.toISOString();
+        console.log("ISOformat: " + isoFormattedDate);
         const encounter={
             id:"1",
             staffID:"staffID",

@@ -5,11 +5,9 @@ import PatientService from "../services/PatientService";
 export default function MyConditionComponent(){
     const [patient, setPatient] = useState(null);
     useEffect(() => {
-        PatientService.getPatientDetails().then((res) => {
+        PatientService.getMyPatientDetails().then((res) => {
             setPatient(res.data);
-            console.log("--------");
             console.log(res.data);
-            console.log("--------");
         })
         .catch(err=>{      
             console.log(err);
@@ -30,11 +28,11 @@ export default function MyConditionComponent(){
                         </tr>
                     </thead>
                     <tbody>
-                        {patient.diagnoses.map((diagnosis, index) => (
+                    {patient.diagnoses.map((diagnosis, index) => (
                             <tr key={index}>
                                 <td>{diagnosis.diagnosis}</td>
                                 <td>{diagnosis.dateTime}</td>
-                                <td>{diagnosis.staff.accountView.name}</td>
+                                <td>{diagnosis.staff?.accountView?.name || 'N/A'}</td>
                             </tr>
                         ))}
                     </tbody>

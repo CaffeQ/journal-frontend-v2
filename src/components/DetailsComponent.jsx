@@ -31,12 +31,6 @@ export default function DetailsComponent(){
                         <td>{patient.account.email}</td>
                     </tr>
                 </tbody>
-                <tbody>
-                <tr>
-                        <td><strong>Diagnoses</strong></td>
-                        <td>{patient.diagnoses }</td>
-                </tr>
-                </tbody>
             </table>
         </div>
        

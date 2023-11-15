@@ -21,7 +21,7 @@ function NavbarComponent() {
             <NavDropdown title="My Pages" id="basic-nav-dropdown">
               <Link className="nav-link" to="/details">Details</Link>
               <Link className="nav-link" to="/myConditions">Conditions</Link>
-              <Link className="nav-link" to="/meetings">Meetings</Link>
+              <Link className="nav-link" to="/myMeetings">Meetings</Link>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">

@@ -12,6 +12,7 @@ import DetailsComponent from './components/DetailsComponent';
 import ConditionComponent from './components/ConditionComponent';
 import MyConditionComponent from './components/MyConditionComponent';
 import MeetingsComponent from './components/MeetingsComponent';
+import MyMeetingsComponent from './components/MyMeetingsComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -29,6 +30,7 @@ function App() {
               <Route path="/patient/:id/conditions" element={<ConditionComponent />} />
               <Route path="/patient/:id/meetings" element={<MeetingsComponent/>} />
               <Route path="/myConditions" element={<MyConditionComponent />} />
+              <Route path="/myMeetings" element={<MyMeetingsComponent />} />
         </Routes>
         </Container>
 

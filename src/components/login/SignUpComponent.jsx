@@ -21,9 +21,6 @@ export default function SignUpComponent(){
         })
 
     }
-    console.log(email);
-    console.log(password);
-    
     return(
     <div className="center">
         <strong className="title"> Sign up! </strong>
