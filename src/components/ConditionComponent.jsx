@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PatientService from "../services/PatientService";
 
-export default function DetailsComponent(patientDiagnosises) {
+export default function DetailsComponent(patientID) {
     const [patient, setPatient] = useState(null);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function DetailsComponent(patientDiagnosises) {
     return (
         <div>
             <h2 className="text-center">Patient conditions</h2>
-            {patient !== null ? (
+            {patient !== null && patient.diagnoses.length > 0 ? (
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -29,18 +29,18 @@ export default function DetailsComponent(patientDiagnosises) {
                         </tr>
                     </thead>
                     <tbody>
-                        {patient.diagnoses.map((diagnosis) => (
-                            <tr key={diagnosis.id}>
-                                <td>{diagnosis.condition}</td>
-                                <td>{diagnosis.date}</td>
-                                <td>{diagnosis.doctorName}</td>
+                        {patient.diagnoses.map((diagnosis, index) => (
+                            <tr key={index}>
+                                <td>{diagnosis.diagnosis}</td>
+                                <td>{diagnosis.dateTime}</td>
+                                <td>{diagnosis.staff.accountView.name}</td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             ) : (
                 <div className="box">
-                    Permission denied
+                    No diagnoses available
                 </div>
             )}
         </div>
