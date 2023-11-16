@@ -38,6 +38,24 @@ class ChatService{
             });
         });
       }
+      postMessage(toEmail, message) {
+        const encodedToEmail = encodeURIComponent(toEmail);
+        const encodedMessage = encodeURIComponent(message);
+    
+        return fetch(`${BASE_URL}/account/chat?toEmail=${encodedToEmail}&message=${encodedMessage}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        });
+    }
 
       
 }

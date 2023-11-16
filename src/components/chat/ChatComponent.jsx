@@ -8,11 +8,48 @@ export function ChatComponent() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [accountNames, setAccountNames] = useState([]);
     const [error, setError] = useState(null);
+    const [message, setMessage] = useState("");
 
-    function submitHandler(e) {
-        e.preventDefault();
-        handleGetUser(email);
+
+    function submitHandler(message) {
+        if (selectedUser) {
+            const toEmail = selectedUser.email;
+            setMessage(message);
+            console.log("submitting message... toEmail=" + toEmail + " message=" + message);
+        } else {
+            setError("Please select a user");
+        }
     }
+    
+    useEffect(() => {
+        if (selectedUser && message) {
+            const toEmail = selectedUser.email;
+            console.log("Sending message... toEmail=" + toEmail + " message=" + message);
+    
+            ChatService.postMessage(toEmail, message)
+                .then((res) => {
+                    console.log("Sent message:", res.data);
+                    setMessage(""); // Clear the message after sending
+                })
+                .catch((error) => {
+                    setError("Error sending message");
+                    console.error("Error sending message:", error);
+                });
+        }
+    }, [selectedUser, message]);
+    /*
+    function handleSendMessage(toEmail,message){
+        console.log("sending message... to email="+toEmail+" message="+message );
+        ChatService.postMessage(toEmail,message)
+        .then((res) => {
+            console.log("Sent message="+res.data);
+        })
+        .catch((error) => {
+            setError("Error sending message");
+            console.error("Error sending message:", error);
+        });
+    }
+    */
 
     function handleGetUser(toEmail) {
         ChatService.getUserConversation(toEmail)
@@ -47,6 +84,7 @@ export function ChatComponent() {
     useEffect(() => {
         fetchAccountNames();
     }, []);
+   
 
     // New function to handle user selection
     const handleUserSelection = (selectedAccount) => {
@@ -86,7 +124,7 @@ export function ChatComponent() {
                         </div>
                     ))
                 )}
-                <form className="text-box" onSubmit={submitHandler}>
+                <form className="text-box" onSubmit={(e) => { e.preventDefault(); submitHandler(email); }}>
                     <input onChange={(e) => setEmail(e.target.value)} type="text" />
                     <label className="text"></label>
                 </form>
