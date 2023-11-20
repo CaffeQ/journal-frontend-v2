@@ -9,6 +9,7 @@ export default function MeetingsComponent() {
     const [patient, setPatient] = useState(null);
     const [expandedEncounterIndex, setExpandedEncounterIndex] = useState(null);
     const [newObservation,setNewObservation] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
     useEffect(() => {
         PatientService.getPatientDetails(id)
             .then((res) => {
@@ -35,7 +36,14 @@ export default function MeetingsComponent() {
         console.log("Observation: " + newObservation);
     }
     function handleCreateMeeting(){
+        
         const dateObject = new Date(newMeetingDate);
+
+        if (isNaN(dateObject.getTime())) {
+            console.error("Invalid date input");
+            setErrorMessage("Cant create meeting")
+            return;
+        }
         const isoFormattedDate = dateObject.toISOString();
         console.log("ISOformat: " + isoFormattedDate);
         const encounter={
@@ -51,6 +59,7 @@ export default function MeetingsComponent() {
             console.log(res.data);
         })
         .catch(err=>{
+            setErrorMessage("Cant create meeting")
             console.log("Could not create a new meeting "+ err);
         })
     }
