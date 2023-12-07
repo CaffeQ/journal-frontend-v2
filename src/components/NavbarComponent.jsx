@@ -18,6 +18,7 @@ function NavbarComponent() {
             <Link className="nav-link" to="/chats">Chats</Link>
             <Link className="nav-link" to="/meetings">Meetings</Link>
             <Link className="nav-link" to="/login">Login</Link>
+            <Link className="nav-link" to="/canvas">Canvas</Link>
             <NavDropdown title="My Pages" id="basic-nav-dropdown">
               <Link className="nav-link" to="/details">Details</Link>
               <Link className="nav-link" to="/myConditions">Conditions</Link>

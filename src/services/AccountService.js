@@ -1,10 +1,10 @@
 import axios from "axios";
 import Account from '../Entities/Account'
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'http://localhost:8081';
 class AccountService {
     loginAccount(account) {
       return new Promise((resolve, reject) => {
-        axios.post(BASE_URL+"/account/login", account,{ withCredentials: true })
+        axios.post(BASE_URL+"/account/login", account)
           .then(response => {
 
 
@@ -16,12 +16,11 @@ class AccountService {
       });
     }
 
-    postAccount(account,role) {
-      console.log(role + " " + account)
+    postAccount(signUpRequest) {
+      console.log("Sign up request: " + signUpRequest)
         return new Promise((resolve, reject) => {
-          axios.post(BASE_URL+"/account/signup?role="+role, account)
+          axios.post(BASE_URL+"/account/signup", signUpRequest)
             .then(response => {
-              document.cookie = "session=" + response.data.sessionId;
               resolve(response);
             })
             .catch(error => {

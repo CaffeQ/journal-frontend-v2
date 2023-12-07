@@ -13,6 +13,7 @@ import ConditionComponent from './components/ConditionComponent';
 import MyConditionComponent from './components/MyConditionComponent';
 import MeetingsComponent from './components/MeetingsComponent';
 import MyMeetingsComponent from './components/MyMeetingsComponent';
+import CanvasPageComponent from './components/CanvasPageComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -31,6 +32,7 @@ function App() {
               <Route path="/patient/:id/meetings" element={<MeetingsComponent/>} />
               <Route path="/myConditions" element={<MyConditionComponent />} />
               <Route path="/myMeetings" element={<MyMeetingsComponent />} />
+              <Route path="/canvas" element={<CanvasPageComponent />} />
         </Routes>
         </Container>
 

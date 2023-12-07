@@ -29,14 +29,16 @@ export default function PatientComponent() {
                     <thead>
                         <tr>
                             <th>Patient Name</th>
-                            <th>Patient Email</th>
+                            <th>Patient age</th>
+                            <th>Patient sex</th>
                         </tr>
                     </thead>
                     <tbody>
                         {patients.map((patient) => (
                             <tr key={patient.id}>
-                                <td>{patient.account.name}</td>
-                                <td>{patient.account.email}</td>
+                                <td>{patient.name}</td>
+                                <td>{patient.age}</td>
+                                <td>{patient.sex}</td>
                                 <td>
                                 <Link className="nav-link" to={`/patient/${patient.id}/meetings`}>Meetings</Link>
                                 </td>

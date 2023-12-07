@@ -3,6 +3,7 @@ import AccountService from '../../services/AccountService.js';
 import {useState} from "react";
 import { useParams } from 'react-router-dom';
 import Account from '../../Entities/Account.js';
+import SignUpDTO from '../../Entities/SignUpDTO.js';
 
 export default function SignUpComponent(){
     const [email,setEmail] = useState(null);
@@ -11,8 +12,10 @@ export default function SignUpComponent(){
     const [role,setRole] = useState(null);
     const [loginStatus,setLoginStatus] = useState(null);
     function handleSubmit(){
-        const account = new Account("string", email, password, name);
-        AccountService.postAccount(account,role)
+        const account = new Account("string", email, password, name,role,"string","string");
+        const signUpDTO = new SignUpDTO(name, role, 23, "male");
+        const signUpRequest = {account,signUpDTO}
+        AccountService.postAccount(signUpRequest)
         .then((res) => {
             setLoginStatus('success');
         })
