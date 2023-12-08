@@ -14,6 +14,7 @@ import MyConditionComponent from './components/MyConditionComponent';
 import MeetingsComponent from './components/MeetingsComponent';
 import MyMeetingsComponent from './components/MyMeetingsComponent';
 import CanvasPageComponent from './components/CanvasPageComponent';
+import SearchPageComponent from './components/SearchPageComponent';
 
 function App() {
   const [state, setstate] = useState(null);
@@ -33,6 +34,7 @@ function App() {
               <Route path="/myConditions" element={<MyConditionComponent />} />
               <Route path="/myMeetings" element={<MyMeetingsComponent />} />
               <Route path="/canvas" element={<CanvasPageComponent />} />
+              <Route path="/search" element={<SearchPageComponent />} />
         </Routes>
         </Container>
 
