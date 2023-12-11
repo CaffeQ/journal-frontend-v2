@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 
 const CanvasComponent = () => {
   const canvasRef = useRef(null);
-
+  const [canvasTitle, setCanvasTitle] = useState("Canvas");
   useEffect(() => {
     const initializeCanvas = () => {
       if (!canvasRef.current) {
@@ -64,8 +64,27 @@ const CanvasComponent = () => {
   }, []);
 
   return (
-    <div style={{ border: '1px solid grey', display: 'inline-block', padding: '10px' }}>
-      <canvas ref={canvasRef} />
+    <div>
+      <div>
+        <h2 className="text-center">
+          <input
+            type="text"
+            value={canvasTitle}
+            onChange={(e) => setCanvasTitle(e.target.value)}
+            style={{ 
+              border: 'none',
+              outline: 'none',
+              background: 'transparent',
+              textAlign: 'center', // Center horizontally
+              lineHeight: '2rem', // Adjust the line height for vertical centering
+            }}
+          />
+        </h2>
+      </div>
+      <div style={{ border: '1px solid grey', display: 'inline-block', padding: '10px' }}>
+        <canvas ref={canvasRef} />
+      </div>
+  
     </div>
   );
 };
