@@ -1,9 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { fabric } from 'fabric';
+import React, { useEffect, useRef, useState } from "react";
+import { fabric } from "fabric";
+import ImageService from "../services/ImageService";
 
-const CanvasComponent = () => {
+const CanvasComponent = ({ selectedPicture, isNewCanvas }) => {
+  console.log("isNewCanvas="+isNewCanvas)
   const canvasRef = useRef(null);
   const [canvasTitle, setCanvasTitle] = useState("Canvas");
+  const [canvasDataURL, setCanvasDataURL] = useState("");
+
   useEffect(() => {
     const initializeCanvas = () => {
       if (!canvasRef.current) {
@@ -18,22 +22,16 @@ const CanvasComponent = () => {
           height: 400,
         });
 
-     
-        const rect = new fabric.Rect({
-          left: 50,
-          top: 50,
-          width: 100,
-          height: 50,
-          fill: 'blue',
-        });
-
-        newCanvas.add(rect);
+        if (!isNewCanvas && selectedPicture) {
+          loadPictureOnCanvas(selectedPicture.image, newCanvas);
+        } else {
+          loadBasicCanvas(newCanvas);
+        }
 
         const pencilBrush = new fabric.PencilBrush(newCanvas);
         pencilBrush.color = 'black';
         pencilBrush.width = 2;
         newCanvas.freeDrawingBrush = pencilBrush;
-        
 
         newCanvas.on('mouse:down', function (event) {
           const pointer = newCanvas.getPointer(event.e);
@@ -47,22 +45,73 @@ const CanvasComponent = () => {
               fontSize: 20,
               fill: 'black',
             });
-            
+
             newCanvas.add(text);
-            
           }
           if (event.e.ctrlKey) {
-            newCanvas.isDrawingMode = true; 
+            newCanvas.isDrawingMode = true;
           }
+        });
+
+        newCanvas.on('object:added', function () {
+          setCanvasDataURL(newCanvas.toDataURL());
         });
       } catch (error) {
         console.error('Error initializing canvas:', error);
       }
     };
 
-    initializeCanvas();
-  }, []);
+    const loadBasicCanvas = (canvas) => {
+      const rect = new fabric.Rect({
+        left: 50,
+        top: 50,
+        width: 100,
+        height: 50,
+        fill: 'blue',
+      });
 
+      canvas.add(rect);
+    };
+
+    initializeCanvas();
+  }, [selectedPicture, isNewCanvas]);
+
+
+  const handleOnSave = () => {
+    if (canvasRef.current) {
+      if(isNewCanvas){
+        const base64String = canvasDataURL; 
+        console.log("Base64 image=",base64String)
+        ImageService.postImage(base64String )
+          .then((res) => {
+            console.log("Saved picture:", res);
+          })
+          .catch((err) => {
+            console.log("Failed to save picture, err=", err);
+          });
+      }else{
+        
+      }
+    }
+  };
+  const loadPictureOnCanvas = (base64String, canvas) => {
+    console.log("Loading base64Image=" + base64String);
+    console.log("Type of base64Image=" + typeof base64String);
+  
+    try {
+      canvas.clear();
+  
+      fabric.Image.fromURL(base64String, function (img) {
+        console.log('Image loaded successfully');
+        canvas.add(img);
+        setCanvasDataURL(canvas.toDataURL());
+        canvas.renderAll(); // Force canvas redraw
+      });
+    } catch (error) {
+      console.error('Error during image loading:', error);
+    }
+  };
+  
   return (
     <div>
       <div>
@@ -75,16 +124,16 @@ const CanvasComponent = () => {
               border: 'none',
               outline: 'none',
               background: 'transparent',
-              textAlign: 'center', // Center horizontally
-              lineHeight: '2rem', // Adjust the line height for vertical centering
+              textAlign: 'center', 
+              lineHeight: '2rem', 
             }}
           />
         </h2>
+        <button onClick={handleOnSave}>Save</button>
       </div>
       <div style={{ border: '1px solid grey', display: 'inline-block', padding: '10px' }}>
         <canvas ref={canvasRef} />
       </div>
-  
     </div>
   );
 };
