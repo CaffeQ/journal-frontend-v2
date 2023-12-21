@@ -4,21 +4,43 @@ const BASE_URL = "http://localhost:8083";
 
 class SearchService{
     postSearch(term){
-        return axios.post(BASE_URL + "/quotes/request?value="+term);
+        return axios.post(BASE_URL + "/quotes/request?value="+term)
+    }
+    postEncounterSearch(term){
+        return axios.post(BASE_URL + "/quotes/request?value="+term)
     }
     getSearch() {
-        const patients = []
-        var source = new EventSource("http://localhost:8083/quotes");
+        const patients = [];
+        const uniquePatientIds = new Set();
+        var source = new EventSource(BASE_URL + "/quotes");
+      
         source.onmessage = (event) => {
-            console.log("Raw SSE data:", event.data);
-            patients.forEach(patient=>{
-                const deserializePatient = deserializePatient(patient)
-                patients.push(deserializePatient)
-            })
-        }
-        console.log("Returning="+patients)
-        return patients
+          console.log("Raw SSE data:", event.data);
+          try {
+            const serializedPatient = event.data;
+            const deserializedPatient = deserializePatient(serializedPatient);
+      
+            // Check if the patient with the same ID already exists
+            if (!uniquePatientIds.has(deserializedPatient.id)) {
+              // Add the patient to the array and set to maintain uniqueness
+              patients.push(deserializedPatient);
+              uniquePatientIds.add(deserializedPatient.id);
+      
+              console.log("Patients =", patients);
+            }
+          } catch (error) {
+            console.error('Error deserializing SSE data:', error.message);
+          }
+        };
+      
+        // Log the initial state of the patients array
+        console.log("Patients =", patients);
+      
+        return patients;
       }
+      
+      
+      
     
 }
 

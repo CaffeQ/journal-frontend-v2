@@ -2,31 +2,29 @@ import React, { useEffect, useState,useRef  } from 'react';
 import SearchService from '../services/SearchService';
 
 const SearchComponent = ({ data }) => {
-  const [searchTerm, setSearchTerm] = useState('Jane');
+  const [searchTerm, setSearchTerm] = useState('');
   const [patients, setPatients] = useState([])
 
   useEffect(() => {
-    const patients = SearchService.getSearch()
-      if (patients) {
-        setPatients(patients);
+    const fetchData = async () => {
+      try {
+        const result = await SearchService.getSearch();
+        setPatients([]);
+        setPatients(result);
+      } catch (error) {
+        console.error('Error fetching patient data:', error.message);
       }
+    };
+  
+    fetchData();
   }, []);
-
-  const fetchData = () => {
-  try {
-    const searchResults = SearchService.getSearch();
-    console.log('Processed data:', searchResults);
-    if(searchResults)
-      setPatients(searchResults)
-
-  } catch (error) {
-    console.error('Error fetching search results:', error.message);
-  }
-};
+  
 
   const handleSearch = (e) => {
     console.log("Patients =", patients);
+    
     const term = e.target.value;
+    
     setSearchTerm(term);
     SearchService.postSearch(searchTerm)
       .then((res) => {
@@ -36,6 +34,9 @@ const SearchComponent = ({ data }) => {
         console.log(err);
       });
   }
+  const filteredPatients = patients.filter((patient) =>
+    patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   
   return (
     <div>
@@ -45,15 +46,15 @@ const SearchComponent = ({ data }) => {
         value={searchTerm}
         onChange={handleSearch}
       />
-
       <ul>
         {patients.map((patient) => (
           <li key={patient.id}>
-            {patient.name} - {patient.role}
+            {`Name: ${patient.name}, Age: ${patient.age}, Sex: ${patient.sex}`}
           </li>
         ))}
       </ul>
-    </div>  
+    </div>
+      
   );
 };
 
