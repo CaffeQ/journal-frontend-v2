@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState,useRef  } from 'react';
+import SearchService from '../services/SearchService';
 
 const SearchComponent = ({ data }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('Jane');
   const [searchResults, setSearchResults] = useState([]);
+  const [patients, setPatients] = useState([])
+
+  const searchService = useRef(SearchService);
+
+
+  useEffect(() => {
+      console.log("Patients =", patients);
+  
+    SearchService.getSearch();
+  }, []);
 
   const handleSearch = (e) => {
+    console.log("Patients =", patients);
     const term = e.target.value;
     setSearchTerm(term);
-    const filteredResults = data.filter(
-      (item) =>
-        item.name.toLowerCase().includes(term.toLowerCase()) ||
-        item.role.toLowerCase().includes(term.toLowerCase())
-    );
-
-    setSearchResults(filteredResults);
-  };
-
+    SearchService.postSearch(searchTerm)
+      .then((res) => {
+        console.log("Search=" + res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  
   return (
     <div>
       <input
@@ -26,13 +38,13 @@ const SearchComponent = ({ data }) => {
       />
 
       <ul>
-        {searchResults.map((result) => (
-          <li key={result.id}>
-            {result.name} - {result.role}
+        {patients.map((patient) => (
+          <li key={patient.id}>
+            {patient.name} - {patient.role}
           </li>
         ))}
       </ul>
-    </div>
+    </div>  
   );
 };
 
