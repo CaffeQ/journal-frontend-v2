@@ -6,28 +6,40 @@ class SearchService{
     postSearch(term){
         return axios.post(BASE_URL + "/quotes/request?value="+term);
     }
-    async getSearch() {
-        try {
-          const response = await fetch(`${BASE_URL}/quotes`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-    
-          if (response.ok) {
-     
-            const searchData = await response.json();
-            console.log('Search results:', searchData);
-            return searchData; 
-          } else {
-            console.error('Failed to get search results:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error:', error.message);
+    getSearch() {
+        const patients = []
+        var source = new EventSource("http://localhost:8083/quotes");
+        source.onmessage = (event) => {
+            console.log("Raw SSE data:", event.data);
+            patients.forEach(patient=>{
+                const deserializePatient = deserializePatient(patient)
+                patients.push(deserializePatient)
+            })
         }
+        console.log("Returning="+patients)
+        return patients
       }
     
 }
+
+function deserializePatient(serializedPatient) {
+    const regex = /\[Patient\(id=([\w-]+), name=([\w\s]+), age=(\d+), sex=([\w]+), encounters=([\w,]+), diagnoses=([\w,]+)\)\]/;
+    const match = serializedPatient.match(regex);
+  
+    if (!match) {
+      throw new Error('Invalid serialized patient format');
+    }
+
+    const [, id, name, age, sex, encounters, diagnoses] = match;
+
+    return {
+      id,
+      name,
+      age: parseInt(age, 10),
+      sex,
+      encounters: encounters.split(',').filter(Boolean),
+      diagnoses: diagnoses.split(',').filter(Boolean),
+    };
+  }
 
 export default new SearchService()

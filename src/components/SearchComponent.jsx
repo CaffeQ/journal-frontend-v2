@@ -3,17 +3,26 @@ import SearchService from '../services/SearchService';
 
 const SearchComponent = ({ data }) => {
   const [searchTerm, setSearchTerm] = useState('Jane');
-  const [searchResults, setSearchResults] = useState([]);
   const [patients, setPatients] = useState([])
 
-  const searchService = useRef(SearchService);
-
-
   useEffect(() => {
-      console.log("Patients =", patients);
-  
-    SearchService.getSearch();
+    const patients = SearchService.getSearch()
+      if (patients) {
+        setPatients(patients);
+      }
   }, []);
+
+  const fetchData = () => {
+  try {
+    const searchResults = SearchService.getSearch();
+    console.log('Processed data:', searchResults);
+    if(searchResults)
+      setPatients(searchResults)
+
+  } catch (error) {
+    console.error('Error fetching search results:', error.message);
+  }
+};
 
   const handleSearch = (e) => {
     console.log("Patients =", patients);
