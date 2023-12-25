@@ -16,7 +16,6 @@ function NavbarComponent() {
             <Link className="nav-link" to="/home">Home</Link>
             <Link className="nav-link" to="/journal">Journal</Link>
             <Link className="nav-link" to="/chats">Chats</Link>
-            <Link className="nav-link" to="/meetings">Meetings</Link>
             <Link className="nav-link" to="/login">Login</Link>
             <Link className="nav-link" to="/canvas">Canvas</Link>
             <Link className="nav-link" to="/search">Search</Link>

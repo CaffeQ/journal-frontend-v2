@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 export default function DetailsComponent() {
     const [patient, setPatient] = useState(null);
+    const [condition, setCondition] = useState('');
     const { id } = useParams(); 
     console.log("Patient ID="+id);
     useEffect(() => {
@@ -18,9 +19,36 @@ export default function DetailsComponent() {
             });
     }, []);
 
+    const handlePostCondition = () => {
+        console.log("Condition="+condition)
+        PatientService.postCondition(id,condition)
+        .then(res => {
+            console.log("succesfull=",res)
+        })
+        .catch(err=>{
+            console.log("Error=",err)
+        })
+    }
+
     return (
         <div>
             <h2 className="text-center">Patient conditions</h2>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter new condition"
+                    value={condition}
+                    onChange={(e) => setCondition(e.target.value)}
+                />
+                <div className="input-group-append">
+                    <button
+                        className="btn btn-outline-secondary"
+                        type="button"
+                        onClick={handlePostCondition}
+                    >
+                        Add Condition
+                    </button>
+                </div>
             {patient !== null && patient.diagnoses.length > 0 ? (
                 <table className="table table-striped">
                     <thead>
