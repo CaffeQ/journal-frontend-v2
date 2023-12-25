@@ -1,4 +1,5 @@
 import SearchComponent from "./SearchComponent";
+import SearchQuarkusComponent from "./SearchQuarkusComp";
 
 
 export default function SearchPageComponent(){
@@ -6,6 +7,7 @@ export default function SearchPageComponent(){
         <div>
             <h2 className="text-center">Search</h2>
             <SearchComponent/>
+            <SearchQuarkusComponent/>
         </div>
     );
 }

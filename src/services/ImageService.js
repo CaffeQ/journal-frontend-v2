@@ -23,14 +23,14 @@ class ImageService {
     });
   }
 
-  // Helper function to convert buffer to base64 string
+
 bufferToBase64(buffer) {
   return new Promise((resolve, reject) => {
     const blob = new Blob([new Uint8Array(buffer)], { type: 'image/png' });
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64String = reader.result;
-      console.log("Base64 String (Client):", base64String.substring(0, 50)); // Log the first few characters
+      console.log("Base64 String (Client):", base64String.substring(0, 50)); 
       resolve(base64String);
     };
     reader.onerror = reject;
@@ -55,14 +55,12 @@ getAllImages() {
       .then(async data => {
         console.log('Received raw data from server:', data);
 
-        // Convert buffer to base64 string
+
         const promises = data.map(async imageData => {
           const base64String = await this.bufferToBase64(imageData.image.data);
           imageData.image = base64String;
           console.log("Image length (Client):", base64String.length);
         });
-
-        // Wait for all base64 conversions to complete before resolving the promise
         await Promise.all(promises);
 
         resolve(data);
@@ -82,8 +80,8 @@ bufferToBase64(buffer) {
     const blob = new Blob([new Uint8Array(buffer)], { type: 'image/png' });
     const reader = new FileReader();
     reader.onloadend = () => {
-      const base64String = atob(reader.result.split(',')[1]); // Use atob to decode URL-encoded string
-      console.log("Base64 String (Client):", base64String.substring(0, 50)); // Log the first few characters
+      const base64String = atob(reader.result.split(',')[1]);
+      console.log("Base64 String (Client):", base64String.substring(0, 50)); 
       resolve(base64String);
     };
     reader.onerror = reject;

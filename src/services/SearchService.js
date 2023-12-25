@@ -6,9 +6,29 @@ class SearchService{
     postSearch(term){
         return axios.post(BASE_URL + "/quotes/request?value="+term)
     }
-    postEncounterSearch(term){
-        return axios.post(BASE_URL + "/quotes/request?value="+term)
+    getPatients(term){
+        return axios.get(BASE_URL + "/search/patient?value="+term)
     }
+    
+    getEncounters(term){
+        return new Promise((resolve, reject) =>{
+            fetch(BASE_URL + "/search/encounter?value="+term)
+            .then(response => {
+                if (!response.ok)
+                    throw new Error(`HTTP error! Status: ${response.status}`)
+                return response.json()
+            })
+            .then((data) => {
+                console.log("getEncounters=", data); // Remove curly braces around data
+                resolve(data);
+              })
+            .catch((error) => {
+                console.error('Error:', error)
+                throw error;
+            })
+        })
+    }
+            
     getSearch() {
         const patients = [];
         const uniquePatientIds = new Set();
@@ -19,10 +39,8 @@ class SearchService{
           try {
             const serializedPatient = event.data;
             const deserializedPatient = deserializePatient(serializedPatient);
-      
-            // Check if the patient with the same ID already exists
+
             if (!uniquePatientIds.has(deserializedPatient.id)) {
-              // Add the patient to the array and set to maintain uniqueness
               patients.push(deserializedPatient);
               uniquePatientIds.add(deserializedPatient.id);
       
@@ -30,29 +48,27 @@ class SearchService{
             }
           } catch (error) {
             console.error('Error deserializing SSE data:', error.message);
+            return []
           }
         };
-      
-        // Log the initial state of the patients array
+    
         console.log("Patients =", patients);
       
         return patients;
       }
       
-      
-      
-    
+
 }
 
 function deserializePatient(serializedPatient) {
-    const regex = /\[Patient\(id=([\w-]+), name=([\w\s]+), age=(\d+), sex=([\w]+), encounters=([\w,]+), diagnoses=([\w,]+)\)\]/;
-    const match = serializedPatient.match(regex);
+    const regex = /\[Patient\(id=([\w-]+), name=([\w\s]+), age=(\d+), sex=([\w]+), encounters=([\w,]+), diagnoses=([\w,]+)\)\]/
+    const match = serializedPatient.match(regex)
   
-    if (!match) {
-      throw new Error('Invalid serialized patient format');
-    }
+    if (!match) 
+      throw new Error('Invalid serialized patient format')
+    
 
-    const [, id, name, age, sex, encounters, diagnoses] = match;
+    const [, id, name, age, sex, encounters, diagnoses] = match
 
     return {
       id,
@@ -61,7 +77,7 @@ function deserializePatient(serializedPatient) {
       sex,
       encounters: encounters.split(',').filter(Boolean),
       diagnoses: diagnoses.split(',').filter(Boolean),
-    };
+    }
   }
 
 export default new SearchService()
