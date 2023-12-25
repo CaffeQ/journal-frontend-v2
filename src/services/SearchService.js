@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8083";
+
+const BASE_URL = process.env.REACT_APP_SEARCH_SERVICE_URL;
 
 class SearchService{
     postSearch(term){
+        console.log("URL="+process.env.REACT_APP_SEARCH_SERVICE_URL)
+
         return axios.post(BASE_URL + "/quotes/request?value="+term)
     }
     getPatients(term){
@@ -19,7 +22,7 @@ class SearchService{
                 return response.json()
             })
             .then((data) => {
-                console.log("getEncounters=", data); // Remove curly braces around data
+                console.log("getEncounters=", data); 
                 resolve(data);
               })
             .catch((error) => {

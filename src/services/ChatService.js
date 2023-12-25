@@ -1,6 +1,8 @@
 import axios from "axios";
 import Account from '../Entities/Account'
-const BASE_URL = 'http://localhost:8080';
+
+
+const BASE_URL = process.env.REACT_APP_CHAT_SERVICE_URL;
 
 class ChatService{
     getAllUsers() {

@@ -35,7 +35,7 @@ export default function DetailsComponent() {
                             <tr key={index}>
                                 <td>{diagnosis.diagnosis}</td>
                                 <td>{diagnosis.dateTime}</td>
-                                <td>{diagnosis.staff.accountView.name}</td>
+                                <td>{diagnosis.staff.name}</td>
                             </tr>
                         ))}
                     </tbody>

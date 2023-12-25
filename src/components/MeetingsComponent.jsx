@@ -46,11 +46,11 @@ export default function MeetingsComponent() {
         }
         const isoFormattedDate = dateObject.toISOString();
         console.log("ISOformat: " + isoFormattedDate);
-        const encounter={
-            id:"1",
-            staffID:"staffID",
-            patientID:id,
-            date:isoFormattedDate
+        const encounter = {
+            id: "1",
+            staffID: "staffID",
+            patientID: id,
+            date: isoFormattedDate
         };
         console.log("New meeting date: " + newMeetingDate);
         console.log("Encounter Object: ", encounter);
