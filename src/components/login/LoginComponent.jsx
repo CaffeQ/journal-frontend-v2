@@ -16,8 +16,38 @@ export default function LoginComponent(){
     const [password,setPassword] = useState(null);
     const [loginStatus,setLoginStatus] = useState(null);
     function handleSubmit(){
-        const account = new Account("string", email, password, name);
-        AccountService.loginAccount(account)
+        //const accountLogin = new Account("string", email, password, name);
+        const accountLogin = {
+            id: "string",
+            email: email,
+            password: password,
+            name: "string",
+            role: "patient",
+            staffID: "e17b5430-9d28-4ca1-8982-bcc370bd92e5",
+            patientID: "e17b5430-9d28-4ca1-8982-bcc370bd92e5"
+        }/*
+        const accountLogin = {
+            id: "f74fe927-8540-4513-bdf0-b9d84406d088",
+            email: "timpim@email.com",
+            password: "password",
+            name: "john doe",
+            role: "doctor",
+            staffID: "e17b5430-9d28-4ca1-8982-bcc370bd92e5",
+            patientID: null
+        }*/
+        console.log("Account login=",accountLogin)
+        /*
+        const accountLogin = {
+            id: "f74fe927-8540-4513-bdf0-b9d84406d088",
+            email: email,
+            password: password,
+            name: "john doe",
+            role: "doctor",
+            staffID: "e17b5430-9d28-4ca1-8982-bcc370bd92e5",
+            patientID: null
+        };
+        */
+        AccountService.loginAccount(accountLogin)
         .then((res) => {
             setLoginStatus('success');
         })
