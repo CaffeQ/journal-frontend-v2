@@ -6,22 +6,23 @@ import { Link } from 'react-router-dom';
 
 export default function PatientComponent() {
     const [patients, setPatients] = useState([]);
-    var isErr = true;
+    const [isErr, setIsErr] = useState(true);
     useEffect(() => {
         PatientService.getPatients().then((res) => {
             setPatients(res.data);
             console.log("--------");
             console.log(res.data);
             console.log("--------");
-            isErr = false;
+            setIsErr(false)
         })
         .catch(err=>{
             
             console.log(err);
+            setIsErr(true)
             console.log("Persmission denied");
         });
     }, []); // Empty dependency array to mimic componentDidMount
-    if(patients != null){
+    if(!isErr){
         return (
             <div>
                 <h2 className="text-center">Patient Details</h2>

@@ -4,6 +4,7 @@ import {useState} from "react";
 import { useParams } from 'react-router-dom';
 import Account from '../../Entities/Account.js';
 import SignUpDTO from '../../Entities/SignUpDTO.js';
+import Cookies from 'js-cookie';
 
 export default function SignUpComponent(){
     const [email,setEmail] = useState(null);
@@ -17,6 +18,10 @@ export default function SignUpComponent(){
         const signUpRequest = {account,signUpDTO}
         AccountService.postAccount(signUpRequest)
         .then((res) => {
+            const token = res.headers.get("Authorization")
+            console.log("Token=",token)
+            Cookies.set("Authorization", token, { expires: 7 });
+            console.log("Saved cookie: ",Cookies.get("Authorization"))
             setLoginStatus('success');
         })
         .catch(err=> {

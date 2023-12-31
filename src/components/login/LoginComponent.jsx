@@ -9,6 +9,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
 import "../navbarComponent.css";
+import Cookies from 'js-cookie';
 
 export default function LoginComponent(){
     const [email,setEmail] = useState(null);
@@ -49,6 +50,7 @@ export default function LoginComponent(){
         */
         AccountService.loginAccount(accountLogin)
         .then((res) => {
+            
             setLoginStatus('success');
         })
         .catch(err=> {

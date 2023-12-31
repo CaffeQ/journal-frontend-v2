@@ -21,6 +21,11 @@ class PatientService{
     postEncounter(encounter){
         return axios.post(BASE_URL+"/journal/encounter",encounter); // ändra adress
     }
+    postCondition(id, diagnosis){
+        const url = `${BASE_URL}/journal/diagnosis?patientID=${id}&diagnosis=${encodeURIComponent(diagnosis)}`
+        return axios.post(url); // ändra adress
+    }
+    /*
     postCondition(id, diagnosis) {
         const url = `${BASE_URL}/journal/diagnosis?patientID=${id}&diagnosis=${encodeURIComponent(diagnosis)}`;
 
@@ -41,6 +46,7 @@ class PatientService{
             throw error;
         });
     }
+    */
     //Removed  withCredentials:true, it worked then
 }
 
