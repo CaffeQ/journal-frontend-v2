@@ -2,7 +2,7 @@ import axios from "axios";
 import Account from '../Entities/Account'
 
 
-const BASE_URL = process.env.REACT_APP_CHAT_SERVICE_URL;
+const BASE_URL = process.env.REACT_APP_ACCOUNT_SERVICE_URL;
 
 class ChatService{
     getAllUsers() {
@@ -41,23 +41,33 @@ class ChatService{
         });
       }
       postMessage(toEmail, message) {
-        const encodedToEmail = encodeURIComponent(toEmail);
-        const encodedMessage = encodeURIComponent(message);
-    
-        return fetch(`${BASE_URL}/account/chat?toEmail=${encodedToEmail}&message=${encodedMessage}`, {
-            method: 'POST',
-            credentials: 'include',
+        const encodedToEmail = encodeURIComponent(toEmail)
+        const encodedMessage = encodeURIComponent(message)
+      
+        return axios.post(
+          `${BASE_URL}/account/chat`,
+          {
+            toEmail: encodedToEmail,
+            message: encodedMessage
+          },
+          {
+            withCredentials: true,
             headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+              'Content-Type': 'application/json'
             }
-            return response.json();
-        });
-    }
+          }
+        )
+          .then(response => {
+            if (response.status !== 200) {
+              throw new Error(`HTTP error! Status: ${response.status}`)
+            }
+            return response.data
+          })
+          .catch(error => {
+            console.error('Error posting message:', error)
+            throw new Error('Failed to post message')
+          })
+      }
 
       
 }
