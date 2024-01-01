@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PatientService from '../services/PatientService';
 import { useParams } from 'react-router-dom';
+import AccountService from '../services/AccountService';
 
 export default function MeetingsComponent() {
     const { id } = useParams();
@@ -10,6 +11,7 @@ export default function MeetingsComponent() {
     const [expandedEncounterIndex, setExpandedEncounterIndex] = useState(null);
     const [newObservation,setNewObservation] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
+    const [myAccount,setMyAcccount] = useState(null)
     useEffect(() => {
         PatientService.getPatientDetails(id)
             .then((res) => {
@@ -19,7 +21,18 @@ export default function MeetingsComponent() {
             .catch((err) => {
                 console.error('Error fetching patient details:', err);
             });
+    
     }, [id]);
+    useEffect(()=>{
+        AccountService.getAccountByEmail()
+        .then((res)=>{
+            console.log("Successfull getting user account",res.data)
+            setMyAcccount(res.data)
+        })
+        .catch(err=>{
+            console.log("Unable to fetch user account",err)
+        })
+    },[])
 
     const toggleSubrow = (index) => {
         setExpandedEncounterIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -44,13 +57,13 @@ export default function MeetingsComponent() {
             setErrorMessage("Cant create meeting")
             return;
         }
-        const isoFormattedDate = dateObject.toISOString();
-        console.log("ISOformat: " + isoFormattedDate);
+        const date = dateObject.toISOString();
+        console.log("ISOformat: " + date);
         const encounter = {
             id: "1",
-            staffID: "staffID",
+            staffID: myAccount.staffID,
             patientID: id,
-            date: isoFormattedDate
+            date: date
         };
         console.log("New meeting date: " + newMeetingDate);
         console.log("Encounter Object: ", encounter);
