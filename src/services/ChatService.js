@@ -31,9 +31,10 @@ class ChatService{
 
       getUserConversation(toEmail){
         return new Promise((resolve, reject) => {
-          axios.get(BASE_URL+"/account/chatTo?toEmail="+toEmail,{ withCredentials: true } )
+          axios.get(BASE_URL+"/account/message/chat?toEmail="+toEmail,{ withCredentials: true } )
             .then(response => {
-               resolve(response);
+              console.log("Conversation=",response.data)
+              resolve(response);
             })
             .catch(error => {
                reject(error);
@@ -45,7 +46,7 @@ class ChatService{
         const encodedMessage = encodeURIComponent(message)
       
         return axios.post(
-          `${BASE_URL}/account/chat`,
+          `${BASE_URL}/account/send?toEmail=${encodedToEmail}&message=${encodedMessage}`,
           {
             toEmail: encodedToEmail,
             message: encodedMessage
@@ -58,9 +59,6 @@ class ChatService{
           }
         )
           .then(response => {
-            if (response.status !== 200) {
-              throw new Error(`HTTP error! Status: ${response.status}`)
-            }
             return response.data
           })
           .catch(error => {

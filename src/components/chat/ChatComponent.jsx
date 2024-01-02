@@ -118,9 +118,9 @@ export function ChatComponent() {
                 {error ? (
                     <div className="error-message">{error}</div>
                 ) : (
-                    chat.map((message) => (
-                        <div key={message.id} className="message-row">
-                            <strong>{message.fromAccount.name}:</strong> {message.message}
+                    chat.map((chat) => (
+                        <div key={chat.id} className="message-row">
+                            <strong>{chat.fromAccount.name}:</strong> {chat.msg}
                         </div>
                     ))
                 )}
