@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_IMAGE_SERVICE_URL + "/api";
+const BASE_URL = process.env.REACT_APP_IMAGE_SERVICE_URL;
 
 class ImageService {
   getTest() {
