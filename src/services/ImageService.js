@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_IMAGE_SERVICE_URL;
+const BASE_URL = process.env.REACT_APP_IMAGE_SERVICE_URL + "/api";
 
 class ImageService {
   getTest() {
     return new Promise((resolve, reject) => {
-      fetch(BASE_URL + '/data') 
+      fetch(BASE_URL + '/api/data') 
         .then(response => {
           if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -40,7 +40,7 @@ bufferToBase64(buffer) {
 
 getAllImages() {
   return new Promise((resolve, reject) => {
-    fetch(BASE_URL + '/images', {
+    fetch(BASE_URL + '/api/images', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ bufferToBase64(buffer) {
   postImage(base64String){     
     console.log("Posting image=",base64String)
     return new Promise((resolve, reject) => {
-      fetch(BASE_URL + '/image', {
+      fetch(BASE_URL + '/api/image', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,12 +122,12 @@ bufferToBase64(buffer) {
   putImage(base64String,id){
     console.log("Putting image=",base64String)
     return new Promise((resolve, reject) => {
-      fetch(BASE_URL + '/image', {
+      fetch(BASE_URL + '/api/image', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ image: base64String }),
+        body: JSON.stringify({ id: id, image: base64String }),
       })
         .then(response => {
           if (!response.ok) {
