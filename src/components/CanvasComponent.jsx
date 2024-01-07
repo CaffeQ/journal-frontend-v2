@@ -90,7 +90,17 @@ const CanvasComponent = ({ selectedPicture, isNewCanvas }) => {
             console.log("Failed to save picture, err=", err);
           });
       }else{
-        
+        if(!selectedPicture)
+          console.log("Selected picture is null!")
+        const base64String = canvasDataURL; 
+        console.log("Base64 image=",base64String)
+        ImageService.putImage(base64String,selectedPicture.id)
+          .then((res) => {
+            console.log("Updated picture:", res);
+          })
+          .catch((err) => {
+            console.log("Failed to update picture, err=", err);
+          });
       }
     }
   };
