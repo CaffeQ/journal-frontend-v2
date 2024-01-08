@@ -8,14 +8,20 @@ class SearchService{
         console.log("URL="+process.env.REACT_APP_SEARCH_SERVICE_URL)
 
         return axios.post(BASE_URL + "/quotes/request?value="+term)
+        .catch(err=>{
+          console.log("Err,",err)
+        })
     }
     getPatients(term){
         return axios.get(BASE_URL + "/search/patient?value="+term)
+        .catch(err=>{
+          console.log("Err,",err)
+        })
     }
     
     getEncounters(term){
         return new Promise((resolve, reject) =>{
-            fetch(BASE_URL + "/search/encounter?value="+term)
+            axios.get(BASE_URL + "/search/encounter?value="+term)
             .then(response => {
                 if (!response.ok)
                     throw new Error(`HTTP error! Status: ${response.status}`)
@@ -27,7 +33,6 @@ class SearchService{
               })
             .catch((error) => {
                 console.error('Error:', error)
-                throw error;
             })
         })
     }
@@ -50,7 +55,7 @@ class SearchService{
               console.log("Patients =", patients);
             }
           } catch (error) {
-            console.error('Error deserializing SSE data:', error.message);
+            console.log('Error deserializing SSE data:', error.message);
             return []
           }
         };
